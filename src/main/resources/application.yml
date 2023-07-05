@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/statisticstest?useSSL=false&autoReconnect=true&useUnicode=true
+    username: root
+    password: bong
+  application:
+    name: StatisticsBatchProjectApplication
+    main:
+      banner-mode: "off"
+    profiles:
+      active: default
+
+  batch:
+    job:
+      enabled: false
+    jdbc:
+      initialize-schema: always
+
+logging:
+  config: classpath:logback-spring.xml
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:/sql/*.xml
+  type-aliases-package: com.example.statisticsbatch.persistence.vo
