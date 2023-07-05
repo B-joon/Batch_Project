@@ -9,7 +9,8 @@ spring:
       banner-mode: "off"
     profiles:
       active: default
-
+  main:
+    allow-bean-definition-overriding: true
   batch:
     job:
       enabled: false
