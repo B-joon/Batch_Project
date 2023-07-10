@@ -7,7 +7,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+// 스케쥴을 사용하기 위한 어노테이션
 @EnableScheduling
+// Batch를 사용하기 위한 어노테이션
 @EnableBatchProcessing
 @SpringBootApplication
 @MapperScans({
