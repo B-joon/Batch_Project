@@ -1,6 +1,5 @@
 package com.example.statisticsbatch.batch.job;
 
-import com.example.statisticsbatch.batch.mapper.StatisticsMapper;
 import com.example.statisticsbatch.persistence.vo.StatisticsVO;
 import com.example.statisticsbatch.persistence.vo.StudentVO;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -17,13 +16,6 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.task.TaskExecutor;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.sql.DataSource;
-import java.util.List;
-import java.util.Map;
 
 @Configuration
 public class MakeStatisticsJobConfig {
