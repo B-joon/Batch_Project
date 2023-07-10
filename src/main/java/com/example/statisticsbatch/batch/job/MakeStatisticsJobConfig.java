@@ -9,22 +9,21 @@ import org.mybatis.spring.batch.MyBatisCursorItemReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobParameters;
-import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
-import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.batch.core.launch.support.SimpleJobLauncher;
-import org.springframework.batch.core.repository.JobRepository;
-import org.springframework.batch.core.repository.support.JobRepositoryFactoryBean;
 import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.support.transaction.ResourcelessTransactionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.sql.DataSource;
+import java.util.List;
+import java.util.Map;
 
 @Configuration
 public class MakeStatisticsJobConfig {
@@ -35,44 +34,13 @@ public class MakeStatisticsJobConfig {
     private StepBuilderFactory stepBuilderFactory;
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
-    @Autowired
-    private StatisticsMapper statisticsMapper;
 
     private static final Logger log = LoggerFactory.getLogger(MakeStatisticsJobConfig.class);
-
-//    // 배치 시작 코드
-//    @Scheduled(cron = "0 0 8 * * *")
-//    public void runStatisticsJob() throws Exception {
-//        JobParameters jobParameters = new JobParametersBuilder()
-//                .addString("jobId", String.valueOf(System.currentTimeMillis()))
-//                .toJobParameters();
-//
-//        jobLauncher().run(statisticsJob(statisticsStep()), jobParameters);
-//
-//        log.info("Statistics job completed");
-//    }
-//
-//    @Bean
-//    public JobLauncher jobLauncher() throws Exception {
-//        SimpleJobLauncher jobLauncher = new SimpleJobLauncher();
-//        jobLauncher.setJobRepository(jobRepository());
-//        jobLauncher.afterPropertiesSet();
-//        return jobLauncher;
-//    }
-//
-//    @Bean
-//    public JobRepository jobRepository() throws Exception {
-//        JobRepositoryFactoryBean factory = new JobRepositoryFactoryBean();
-//        factory.setDataSource(dataSource);
-//        factory.setTransactionManager(new ResourcelessTransactionManager());
-//        factory.afterPropertiesSet();
-//        return factory.getObject();
-//    }
 
     // Step 을 실행 시키는 담당
     @Bean
     public Job makeStatisticsJob() {
-        log.info("[addStatisticsItemWriter] batch 작업 시작");
+        log.info("batch 작업 시작");
         return this.jobBuilderFactory.get("makeStatisticsJob")
                 .start(makeStatisticsStep())
                 .build();
@@ -103,7 +71,8 @@ public class MakeStatisticsJobConfig {
         reader.setSqlSessionFactory(sqlSessionFactory);
         // setQueryId 메서드를 사용하여 MyBatis의 Mapper XML에서 사용하는 쿼리의 ID를 지정합니다.
         // 해당 쿼리는 PassMapper.xml에 정의되어 있어야 합니다.
-        reader.setQueryId("");
+        reader.setQueryId("com.example.statisticsbatch.persistence.mapper.TestMapper.getAllStudents");
+//        reader.setParameterValues(Map.of("from", from, "to", to));
         return reader;
     }
 
@@ -119,8 +88,8 @@ public class MakeStatisticsJobConfig {
     public MyBatisBatchItemWriter<StatisticsVO> addStatisticsItemWriter() {
         MyBatisBatchItemWriter<StatisticsVO> writer = new MyBatisBatchItemWriter<>();
         writer.setSqlSessionFactory(sqlSessionFactory);
-
-        log.info("[addStatisticsItemWriter] batch 작업 종료");
+        writer.setStatementId("com.example.statisticsbatch.batch.mapper.StatisticsMapper.updateTest");
+        log.info("batch 작업 종료");
 
         return writer;
     }

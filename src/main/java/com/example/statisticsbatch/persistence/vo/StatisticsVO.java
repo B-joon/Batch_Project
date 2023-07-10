@@ -8,6 +8,6 @@ import lombok.Setter;
 public class StatisticsVO {
 
     private String favorite_subject;
-    private int total_votes;
+    private int total_votes = 0;
 
 }

@@ -5,6 +5,12 @@ spring:
     password: bong
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+# ??? ?? ?? cron ??
+# ???? ? ? ? ? ? ? ?
+  task:
+    scheduling:
+      cron: "0 0 8 * * * *"
+
   batch:
     job:
       enabled: false

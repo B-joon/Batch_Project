@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.statisticsbatch.batch.mapper.StatisticsMapper">
+
+    <select id="getStatisticsByFavoriteSubject" parameterType="String">
+        SELECT * FROM statistics
+        WHERE favorite_subject = #{favorite_subject}
+    </select>
+
+    <update id="updateTest" parameterType="StatisticsVO">
+        UPDATE statistics
+        SET total_votes = total_votes + 1
+        WHERE favorite_subject = #{favorite_subject}
+    </update>
+</mapper>
