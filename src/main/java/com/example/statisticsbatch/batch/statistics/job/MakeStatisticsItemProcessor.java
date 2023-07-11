@@ -1,4 +1,4 @@
-package com.example.statisticsbatch.batch.job;
+package com.example.statisticsbatch.batch.statistics.job;
 
 import com.example.statisticsbatch.persistence.vo.StatisticsVO;
 import com.example.statisticsbatch.persistence.vo.StudentVO;
@@ -15,8 +15,6 @@ public class MakeStatisticsItemProcessor implements ItemProcessor<StudentVO, Sta
     public StatisticsVO process(StudentVO item) {
 
         StatisticsVO statisticsVO = new StatisticsVO();
-
-        statisticsVO.setFavorite_subject(item.getStudent_favorite_subject());
 
         return statisticsVO;
     }

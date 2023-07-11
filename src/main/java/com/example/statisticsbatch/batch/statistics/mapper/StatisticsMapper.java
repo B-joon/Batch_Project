@@ -1,4 +1,4 @@
-package com.example.statisticsbatch.batch.mapper;
+package com.example.statisticsbatch.batch.statistics.mapper;
 
 import com.example.statisticsbatch.persistence.vo.StatisticsVO;
 

@@ -1,4 +1,4 @@
-package com.example.statisticsbatch.batch.job;
+package com.example.statisticsbatch.batch.statistics.job;
 
 import com.example.statisticsbatch.persistence.vo.StatisticsVO;
 import com.example.statisticsbatch.persistence.vo.StudentVO;
@@ -64,7 +64,7 @@ public class MakeStatisticsJobConfig {
         reader.setSqlSessionFactory(sqlSessionFactory);
         // setQueryId 메서드를 사용하여 MyBatis의 Mapper XML에서 사용하는 쿼리의 ID를 지정합니다.
         // 해당 쿼리는 PassMapper.xml에 정의되어 있어야 합니다.
-        reader.setQueryId("com.example.statisticsbatch.persistence.mapper.TestMapper.getAllStudents");
+        reader.setQueryId("Mapper interface 경로 + Mapper.class 이름 + 쿼리 id");
 //        reader.setParameterValues(Map.of("from", from, "to", to));
         return reader;
     }
@@ -73,7 +73,6 @@ public class MakeStatisticsJobConfig {
     @Bean
     public ItemProcessor<StudentVO, StatisticsVO> addStatisticsItemProcessor() {
         return new MakeStatisticsItemProcessor();
-        // 람다 방식 MakeStatisticsItemProcessor() 클래스에 process 메소드와 동일 하게 동작.
 //        return studentVO -> {
 //            StatisticsVO statisticsVO = new StatisticsVO();
 //            statisticsVO.setFavorite_subject(item.getStudent_favorite_subject());
@@ -88,7 +87,7 @@ public class MakeStatisticsJobConfig {
         MyBatisBatchItemWriter<StatisticsVO> writer = new MyBatisBatchItemWriter<>();
         writer.setSqlSessionFactory(sqlSessionFactory);
         // MyBatisCursorItemReader 메소드의 reader.setQueryId() 와 동일함.
-        writer.setStatementId("com.example.statisticsbatch.batch.mapper.StatisticsMapper.updateTest");
+        writer.setStatementId("Mapper interface 경로 + Mapper.class 이름 + 쿼리 id");
 
         return writer;
     }
