@@ -16,8 +16,6 @@ public class MakeStatisticsItemProcessor implements ItemProcessor<StudentVO, Sta
 
         StatisticsVO statisticsVO = new StatisticsVO();
 
-        log.info(item.getStudent_favorite_subject());
-
         statisticsVO.setFavorite_subject(item.getStudent_favorite_subject());
 
         return statisticsVO;

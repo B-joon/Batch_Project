@@ -32,7 +32,7 @@ public class MakeStatisticsJobConfig {
     // Step 을 실행 시키는 담당
     @Bean
     public Job makeStatisticsJob() {
-        log.info("batch 작업 시작");
+        log.info("makeStatisticsJob Start");
         return this.jobBuilderFactory.get("makeStatisticsJob")
                 .start(makeStatisticsStep())
                 .build();
@@ -43,6 +43,7 @@ public class MakeStatisticsJobConfig {
     public Step makeStatisticsStep() {
         return this.stepBuilderFactory.get("makeStatisticsStep")
                 // 데이터를 가공하기 위한 개수 지정
+                // db에 데이터가 1000개가 있고 chunk를 100으로 지정하면 100개 씩 총 10번 동작함.
                 .<StudentVO, StatisticsVO>chunk(100)
                 // 데이터 호출을 위한 메소드 지정
                 .reader(addStatisticsItemReader())
@@ -81,7 +82,6 @@ public class MakeStatisticsJobConfig {
         MyBatisBatchItemWriter<StatisticsVO> writer = new MyBatisBatchItemWriter<>();
         writer.setSqlSessionFactory(sqlSessionFactory);
         writer.setStatementId("com.example.statisticsbatch.batch.mapper.StatisticsMapper.updateTest");
-        log.info("batch 작업 종료");
 
         return writer;
     }
