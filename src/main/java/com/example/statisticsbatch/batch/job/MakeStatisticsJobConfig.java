@@ -73,6 +73,12 @@ public class MakeStatisticsJobConfig {
     @Bean
     public ItemProcessor<StudentVO, StatisticsVO> addStatisticsItemProcessor() {
         return new MakeStatisticsItemProcessor();
+        // 람다 방식 MakeStatisticsItemProcessor() 클래스에 process 메소드와 동일 하게 동작.
+//        return studentVO -> {
+//            StatisticsVO statisticsVO = new StatisticsVO();
+//            statisticsVO.setFavorite_subject(item.getStudent_favorite_subject());
+//            return statisticsVO;
+//        };
     }
 
     // 가공한 데이터 결과 db table 에 저장
@@ -81,6 +87,7 @@ public class MakeStatisticsJobConfig {
     public MyBatisBatchItemWriter<StatisticsVO> addStatisticsItemWriter() {
         MyBatisBatchItemWriter<StatisticsVO> writer = new MyBatisBatchItemWriter<>();
         writer.setSqlSessionFactory(sqlSessionFactory);
+        // MyBatisCursorItemReader 메소드의 reader.setQueryId() 와 동일함.
         writer.setStatementId("com.example.statisticsbatch.batch.mapper.StatisticsMapper.updateTest");
 
         return writer;
