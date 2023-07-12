@@ -3,10 +3,10 @@ spring:
     url: url
     username: username
     password: password
-    driver-class-name: driver-class-name
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
-# ??? ?? ?? cron ??
-# cron "? ? ? ? ? ?"
+# 스케쥴 시간 설정 cron 사용
+# cron "초 분 시 일 월 주"
   task:
     scheduling:
       cron:
