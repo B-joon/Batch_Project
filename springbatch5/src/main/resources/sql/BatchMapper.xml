@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springbatch5.persistence.mapper.BatchMapper">
+
+<!--    <insert id = "statementId">-->
+<!--        INSERT INTO statisticsGender(gender, count) VALUES-->
+<!--        <foreach item = "item" separator = "," collection = "OutputVO">-->
+<!--            (#{item.gender}, #{item.count})-->
+<!--        </foreach>-->
+<!--        ON DUPLICATE KEY UPDATE count = values(count)-->
+<!--    </insert>-->
+
+    <insert id = "setGender" parameterType="GenderVO">
+        INSERT INTO statisticsGender(gender, count) VALUES
+        (#{gender}, #{count})
+    </insert>
+
+    <insert id = "setAge" parameterType="AgeVO">
+        INSERT INTO statisticsAge(age, count) VALUES
+            (#{age}, #{count})
+    </insert>
+
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springbatch5.persistence.mapper.FollowerMapper">
+
+    <select id="genderData" resultType="FollowerVO" parameterType="java.time.LocalDateTime">
+        select gender, COUNT(*) as count
+        from follower
+        where create_at >= #{create_at}
+        group by gender
+    </select>
+
+    <select id="ageData" resultType="FollowerVO" parameterType="Long">
+        select age, count
+        from (select age, COUNT(*) as count
+              from follower
+              group by age
+              order by count desc
+                  limit 5) a
+        where age >= #{age};
+    </select>
+
+</mapper>
